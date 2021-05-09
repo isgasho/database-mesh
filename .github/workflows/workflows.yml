@@ -1,0 +1,42 @@
+name: Database-Mesh CICD
+# This workflow is triggered on pushes to the repository.
+on: push
+
+jobs:
+  scan:
+    name: "Scan"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Gosec Security Scanner
+      uses: securego/gosec@master
+      with:
+        args: ./…
+  build:
+    name: Go and Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout go"
+        uses: actions/checkout@master #github.com/actions
+      - name: "setup go"
+        uses: actions/setup-go@v1
+        with:
+          go-version: '1.15'
+      - name: "prepare cache"
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: "manifest"
+        run: echo `git log | grep commit | head -1 | cut -d" " -f2` > manifest
+      - name: "build"
+        run: make linux
+      - name: Kaniko build
+        uses: aevea/action-kaniko@master
+        with:
+          image: mworks92/database-mesh
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          build_file: Dockerfile
+
