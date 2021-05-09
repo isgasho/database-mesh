@@ -32,11 +32,3 @@ jobs:
         run: echo `git log | grep commit | head -1 | cut -d" " -f2` > manifest
       - name: "build"
         run: make linux
-      - name: Kaniko build
-        uses: aevea/action-kaniko@master
-        with:
-          image: mworks92/database-mesh
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          build_file: Dockerfile
-
