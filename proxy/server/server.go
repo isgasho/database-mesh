@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/SphereEx/database-mesh/pkg/connector"
-	"github.com/SphereEx/database-mesh/pkg/server/config"
 	"github.com/mlycore/log"
+
+	"github.com/SphereEx/database-mesh/proxy/connector"
+	"github.com/SphereEx/database-mesh/proxy/server/config"
 )
 
 // ProxyProtocol defines currently supported common database type protocol

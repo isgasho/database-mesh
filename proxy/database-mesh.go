@@ -4,9 +4,10 @@ import (
 	"net/http"
 	_ "net/http/pprof"
 
-	"github.com/SphereEx/database-mesh/pkg/server"
-	"github.com/SphereEx/database-mesh/pkg/server/config"
 	"github.com/mlycore/log"
+
+	"github.com/SphereEx/database-mesh/proxy/server"
+	"github.com/SphereEx/database-mesh/proxy/server/config"
 	//_ "github.com/mkevac/debugcharts"
 )
 
