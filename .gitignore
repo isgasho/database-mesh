@@ -4,3 +4,4 @@ configs
 manifest
 perf/continuous-profiling/conprof/data/
 vendor/
+.DS_Store
