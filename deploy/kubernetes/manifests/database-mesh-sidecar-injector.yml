@@ -1,0 +1,26 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  labels:
+    app: database-mesh-injector
+  name: database-mesh-injector
+webhooks:
+  - clientConfig:
+      caBundle: ${CA_BUNDLE}
+      service:
+        name: database-mesh-injector
+        namespace: database-mesh
+        path: /inject
+    name: injector.database-mesh.sphereex.io
+    namespaceSelector:
+      matchLabels:
+        database-mesh-injection: enabled
+    rules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+        resources:
+          - pods
